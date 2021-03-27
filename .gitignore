@@ -1,0 +1,7 @@
+.env
+docker/data/mysql/*
+docker/data/redis/*
+!docker/data/mysql/.gitkeep
+!docker/data/redis/.gitkeep
+.idea/
+.vscode/
