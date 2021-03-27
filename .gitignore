@@ -5,3 +5,5 @@ docker/data/redis/*
 !docker/data/redis/.gitkeep
 .idea/
 .vscode/
+backend/node_modules
+*.log
