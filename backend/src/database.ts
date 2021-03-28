@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 import { getConnectionManager } from 'typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import Env from './helpers/Env';
+import CakePhpNamingStrategy from './helpers/CakePhpNamingStrategy';
 
 const connectionManager = getConnectionManager();
 const dbConnection = connectionManager.create({
   type: 'mysql',
-  namingStrategy: new SnakeNamingStrategy(),
+  namingStrategy: new CakePhpNamingStrategy(),
   url: Env.string('DATABASE_URL'),
   entities: [`${__dirname}/entity/*.{js,ts}`],
   synchronize: Env.bool('DATABASE_SYNCING'),
