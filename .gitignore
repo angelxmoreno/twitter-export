@@ -7,3 +7,4 @@ docker/data/redis/*
 .vscode/
 backend/node_modules
 *.log
+backend/dist
