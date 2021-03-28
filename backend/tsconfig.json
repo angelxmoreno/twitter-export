@@ -4,7 +4,7 @@
     "module": "commonjs",
     "sourceMap": true,
     "outDir": "dist",
-    "rootDir": "./src",
+    "rootDir": "src",
     "strict": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
@@ -22,7 +22,9 @@
     }
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    ".eslintrc.js",
+    "package.json"
   ],
   "exclude": ["node_modules"]
 }
