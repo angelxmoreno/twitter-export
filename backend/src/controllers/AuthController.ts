@@ -2,17 +2,9 @@ import { CurrentUser, Get, JsonController, QueryParam } from 'routing-controller
 import { AccessTokenOptions, AccessTokenResponse } from 'twitter-lite';
 import twitterService, { RequestTokenResponse } from '../services/TwitterService';
 import RepositoryManager from '../services/RepositoryManager';
-import JwtService from '../services/JwtService';
 import { User } from '../entities/User';
+import userWithJwtResponse, { UserWithJWTResponse } from '../helpers/userWithJwtResponse';
 
-type UserWithJWTResponse = {
-  jwt: string;
-  user: {
-    id: string;
-    twitterUserId: string;
-    screenName: string;
-  };
-};
 @JsonController('/auth')
 export default class AuthController {
   @Get('/request-token')
@@ -32,19 +24,12 @@ export default class AuthController {
 
     const accessTokens: AccessTokenResponse = await twitterService.getAccessToken(options);
     const user = await RepositoryManager.getUsers().createFromAccessTokenResponse(accessTokens);
-    const jwt = JwtService.fromUser(user);
-    return {
-      jwt,
-      user: {
-        id: user.id,
-        twitterUserId: user.twitterUserId,
-        screenName: user.screenName,
-      },
-    };
+
+    return userWithJwtResponse(user);
   }
 
   @Get('/check')
-  async getCurrentUser(@CurrentUser({ required: true }) user: User): Promise<User> {
-    return user;
+  async getCurrentUser(@CurrentUser({ required: true }) user: User): Promise<UserWithJWTResponse> {
+    return userWithJwtResponse(user);
   }
 }
