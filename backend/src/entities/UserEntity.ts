@@ -2,7 +2,7 @@ import { Column, Entity, Index } from 'typeorm';
 import { EntityBase } from './EntityBase';
 
 @Entity()
-export class User extends EntityBase {
+export class UserEntity extends EntityBase {
   @Column()
   oauthToken: string;
 

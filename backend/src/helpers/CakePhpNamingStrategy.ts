@@ -5,7 +5,7 @@ import { Table } from 'typeorm';
 
 export default class CakePhpNamingStrategy extends SnakeNamingStrategy {
   tableName(className: string, customName: string): string {
-    return customName || pluralize(snakeCase(className));
+    return customName || pluralize(snakeCase(className.replace('Entity', '')));
   }
 
   indexName(tableOrName: Table | string, columnNames: string[], where?: string): string {

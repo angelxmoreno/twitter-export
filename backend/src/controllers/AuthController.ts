@@ -2,7 +2,7 @@ import { CurrentUser, Get, JsonController, QueryParam } from 'routing-controller
 import { AccessTokenOptions, AccessTokenResponse } from 'twitter-lite';
 import twitterService, { RequestTokenResponse } from '../services/TwitterService';
 import RepositoryManager from '../services/RepositoryManager';
-import { User } from '../entities/User';
+import { UserEntity } from '../entities/UserEntity';
 import userWithJwtResponse, { UserWithJWTResponse } from '../helpers/userWithJwtResponse';
 
 @JsonController('/auth')
@@ -29,7 +29,7 @@ export default class AuthController {
   }
 
   @Get('/check')
-  async getCurrentUser(@CurrentUser({ required: true }) user: User): Promise<UserWithJWTResponse> {
+  async getCurrentUser(@CurrentUser({ required: true }) user: UserEntity): Promise<UserWithJWTResponse> {
     return userWithJwtResponse(user);
   }
 }
