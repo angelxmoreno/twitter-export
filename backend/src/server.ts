@@ -5,10 +5,12 @@ import morgan from 'morgan';
 import { isDevelopment } from './helpers/node-env';
 import { JsonErrorHandler } from './middlewares/JsonErrorHandler';
 import { NotFoundMiddleware } from './middlewares/NotFoundMiddleware';
+import currentUserChecker from './helpers/currentUserChecker';
 
 const server: Application = createExpressServer({
   cors: true,
   defaultErrorHandler: false,
+  currentUserChecker,
   controllers: [`${__dirname}/controllers/*`],
   middlewares: [NotFoundMiddleware, JsonErrorHandler],
   development: isDevelopment(),

@@ -1,8 +1,9 @@
-import { Get, JsonController, QueryParam } from 'routing-controllers';
+import { CurrentUser, Get, JsonController, QueryParam } from 'routing-controllers';
 import { AccessTokenOptions, AccessTokenResponse } from 'twitter-lite';
 import twitterService, { RequestTokenResponse } from '../services/TwitterService';
 import RepositoryManager from '../services/RepositoryManager';
 import JwtService from '../services/JwtService';
+import { User } from '../entities/User';
 
 type UserWithJWTResponse = {
   jwt: string;
@@ -40,5 +41,10 @@ export default class AuthController {
         screenName: user.screenName,
       },
     };
+  }
+
+  @Get('/check')
+  async getCurrentUser(@CurrentUser({ required: true }) user: User): Promise<User> {
+    return user;
   }
 }
