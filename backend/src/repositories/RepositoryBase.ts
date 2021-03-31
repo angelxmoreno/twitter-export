@@ -1,4 +1,4 @@
-import { AbstractRepository } from 'typeorm';
+import { AbstractRepository, FindManyOptions } from 'typeorm';
 import { FindConditions } from 'typeorm/find-options/FindConditions';
 import { FindOneOptions } from 'typeorm/find-options/FindOneOptions';
 import { DeepPartial } from 'typeorm/common/DeepPartial';
@@ -30,6 +30,10 @@ export default class RepositoryBase<Entity> extends AbstractRepository<Entity> {
     return this.repository.findOne(conditions, options);
   }
 
+  findMany(conditions?: FindManyOptions<Entity>): Promise<Entity[] | undefined> {
+    return this.repository.find(conditions);
+  }
+
   create(entityLike: DeepPartial<Entity>): Entity {
     return this.repository.create(entityLike);
   }
@@ -40,5 +44,35 @@ export default class RepositoryBase<Entity> extends AbstractRepository<Entity> {
 
   get(id: string): Promise<Entity> {
     return this.repository.findOneOrFail(id);
+  }
+
+  async upsert(conditions: FindConditions<Entity>, partial: DeepPartial<Entity>): Promise<[Entity, boolean]> {
+    let found = true;
+    let entity = await this.findOne(conditions);
+
+    if (!entity) {
+      found = false;
+      entity = this.create(partial);
+    } else {
+      found = true;
+      entity = this.repository.merge(entity, partial);
+    }
+
+    return [await this.save(entity), found];
+  }
+
+  async paginate(findOptions?: FindManyOptions<Entity>, paginationOptions?: PaginateOptions): Promise<Paginate> {
+    const { skip, limit, paginate } = buildPaginator({
+      ...paginationOptions,
+      ...this.paginationOptions,
+    });
+
+    const findPaginatedOptions: FindManyOptions<Entity> = {
+      ...findOptions,
+      take: limit,
+      skip,
+    };
+    const [entities, count] = await this.repository.findAndCount(findPaginatedOptions);
+    return paginate(entities, count);
   }
 }
