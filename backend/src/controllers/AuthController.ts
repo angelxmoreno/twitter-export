@@ -1,6 +1,6 @@
 import { CurrentUser, Get, JsonController, QueryParam } from 'routing-controllers';
 import { AccessTokenOptions, AccessTokenResponse } from 'twitter-lite';
-import twitterService, { RequestTokenResponse } from '../services/TwitterService';
+import twitterAuthService, { RequestTokenResponse } from '../services/TwitterAuthService';
 import RepositoryManager from '../services/RepositoryManager';
 import { UserEntity } from '../entities/UserEntity';
 import userWithJwtResponse, { UserWithJWTResponse } from '../helpers/userWithJwtResponse';
@@ -9,7 +9,7 @@ import userWithJwtResponse, { UserWithJWTResponse } from '../helpers/userWithJwt
 export default class AuthController {
   @Get('/request-token')
   getRequestToken(@QueryParam('callback_url') callbackUrl: string): Promise<RequestTokenResponse> {
-    return twitterService.getRequestToken(callbackUrl);
+    return twitterAuthService.getRequestToken(callbackUrl);
   }
 
   @Get('/access-token')
@@ -22,7 +22,7 @@ export default class AuthController {
       oauth_verifier: oauthVerifier,
     };
 
-    const accessTokens: AccessTokenResponse = await twitterService.getAccessToken(options);
+    const accessTokens: AccessTokenResponse = await twitterAuthService.getAccessToken(options);
     const user = await RepositoryManager.getUsers().createFromAccessTokenResponse(accessTokens);
 
     return userWithJwtResponse(user);
