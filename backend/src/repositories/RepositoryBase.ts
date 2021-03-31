@@ -4,14 +4,15 @@ import { FindOneOptions } from 'typeorm/find-options/FindOneOptions';
 import { DeepPartial } from 'typeorm/common/DeepPartial';
 import { SaveOptions } from 'typeorm/repository/SaveOptions';
 import buildPaginator from 'pagination-apis';
+import paginatorDecorator, { PaginatorResponse } from '../helpers/paginatorDecorator';
 
-type PaginateOptions = {
+export type PaginateOptions = {
   page: number;
   limit: number;
   maximumLimit: number;
 };
 
-interface Paginate {
+export interface Paginate {
   data: Array<unknown>;
   total: number;
   totalPages: number;
@@ -61,10 +62,14 @@ export default class RepositoryBase<Entity> extends AbstractRepository<Entity> {
     return [await this.save(entity), found];
   }
 
-  async paginate(findOptions?: FindManyOptions<Entity>, paginationOptions?: PaginateOptions): Promise<Paginate> {
-    const { skip, limit, paginate } = buildPaginator({
-      ...paginationOptions,
+  async paginate<T>(
+    findOptions?: FindManyOptions<Entity>,
+    paginationOptions?: Partial<PaginateOptions>,
+    transformPredicate?: (entity: Entity) => T,
+  ): Promise<PaginatorResponse<T>> {
+    const { skip, limit, page } = buildPaginator({
       ...this.paginationOptions,
+      ...paginationOptions,
     });
 
     const findPaginatedOptions: FindManyOptions<Entity> = {
@@ -72,7 +77,8 @@ export default class RepositoryBase<Entity> extends AbstractRepository<Entity> {
       take: limit,
       skip,
     };
-    const [entities, count] = await this.repository.findAndCount(findPaginatedOptions);
-    return paginate(entities, count);
+    const [entities, total] = await this.repository.findAndCount(findPaginatedOptions);
+    const data: T[] = transformPredicate ? entities.map(transformPredicate) : ((entities as unknown[]) as T[]);
+    return paginatorDecorator<T>(data, total, page, limit);
   }
 }
