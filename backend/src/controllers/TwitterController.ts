@@ -19,7 +19,21 @@ export default class TwitterController {
   }
 
   @Get('/followers')
-  followers(@QueryParams() params: Twit.Params, @CurrentUser({ required: true }) user: UserEntity): Promise<unknown> {
-    return twitterService.userFollowers(user);
+  async followers(
+    @QueryParams() params: { page: number },
+    @CurrentUser({ required: true }) user: UserEntity,
+  ): Promise<PaginatorResponse<TwitterUser>> {
+    const paginationOptions: Partial<PaginateOptions> = {
+      page: params.page,
+    };
+    await user.twitterClient.buildFollowerEntities();
+    return RepositoryManager.getFollowers().paginate<TwitterUser>(
+      {
+        where: { twitterUserId: user.twitterUserId },
+        relations: ['follower'],
+      },
+      paginationOptions,
+      entity => entity.follower.data,
+    );
   }
 }
