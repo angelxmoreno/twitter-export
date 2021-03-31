@@ -1,15 +1,7 @@
-import { CreateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { PrimaryGeneratedColumn } from 'typeorm';
+import { EntityTimeBase } from './EntityTimeBase';
 
-export abstract class EntityBase {
+export abstract class EntityBase extends EntityTimeBase {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @UpdateDateColumn()
-  updated: Date;
-
-  @CreateDateColumn()
-  created: Date;
-
-  @DeleteDateColumn()
-  deleted: Date;
 }

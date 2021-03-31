@@ -16,6 +16,6 @@ export default class CakePhpNamingStrategy extends SnakeNamingStrategy {
     let key = `${replacedTableName}_${clonedColumnNames.join('_')}`;
     if (where) key += `_${where}`;
 
-    return key.substr(0, 26);
+    return key.substr(0, 20);
   }
 }
