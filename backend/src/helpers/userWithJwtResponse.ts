@@ -1,4 +1,4 @@
-import { User } from '../entities/User';
+import { UserEntity } from '../entities/UserEntity';
 import JwtService from '../services/JwtService';
 
 export type UserWithJWTResponse = {
@@ -9,7 +9,7 @@ export type UserWithJWTResponse = {
     screenName: string;
   };
 };
-const JwtResponseFromUser = (user: User): UserWithJWTResponse => {
+const JwtResponseFromUser = (user: UserEntity): UserWithJWTResponse => {
   const jwt = JwtService.fromUser(user);
   return {
     jwt,

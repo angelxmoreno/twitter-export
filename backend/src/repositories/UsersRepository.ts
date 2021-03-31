@@ -1,17 +1,17 @@
 import { EntityRepository } from 'typeorm';
 import { AccessTokenResponse } from 'twitter-lite';
 import { DeepPartial } from 'typeorm/browser';
-import { User } from '../entities/User';
 import RepositoryBase from './RepositoryBase';
+import { UserEntity } from '../entities/UserEntity';
 
-@EntityRepository(User)
-export class UsersRepository extends RepositoryBase<User> {
-  findByTwitterId(id: string): Promise<User | undefined> {
+@EntityRepository(UserEntity)
+export class UsersRepository extends RepositoryBase<UserEntity> {
+  findByTwitterId(id: string): Promise<UserEntity | undefined> {
     return this.findOne({ twitterUserId: id });
   }
 
-  async createFromAccessTokenResponse(accessTokenResponse: AccessTokenResponse): Promise<User> {
-    const partial: DeepPartial<User> = {
+  async createFromAccessTokenResponse(accessTokenResponse: AccessTokenResponse): Promise<UserEntity> {
+    const partial: DeepPartial<UserEntity> = {
       oauthToken: accessTokenResponse.oauth_token,
       oauthTokenSecret: accessTokenResponse.oauth_token_secret,
       screenName: accessTokenResponse.screen_name,
