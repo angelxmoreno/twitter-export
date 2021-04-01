@@ -30,6 +30,7 @@ module.exports = {
     extraFileExtensions: ['.json', '.css'],
   },
   rules: {
+    'react/prop-types': 'off',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/naming-convention': 'off',
     'linebreak-style': 'off',
