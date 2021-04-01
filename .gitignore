@@ -3,8 +3,6 @@ docker/data/mysql/*
 docker/data/redis/*
 !docker/data/mysql/.gitkeep
 !docker/data/redis/.gitkeep
-.idea/
-.vscode/
-backend/node_modules
+.idea
+.vscode
 *.log
-backend/dist
