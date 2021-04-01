@@ -4,6 +4,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { hydrateStores, rootStore, StoreContext } from './mobx';
+
+hydrateStores().then(() => {
+  ReactDOM.render(
+    <StoreContext.Provider value={rootStore}>
+      <App />
+    </StoreContext.Provider>,
+    document.getElementById('root'),
+  );
+});
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
