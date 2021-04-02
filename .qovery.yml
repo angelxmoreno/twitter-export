@@ -1,0 +1,23 @@
+---
+application:
+  name: "twitter-export"
+  project: "twitter-export"
+  organization: "QoveryCommunity"
+  storage:
+  - name: "cachefs"
+    size: "10"
+    type: "fast_ssd"
+    mount_point: "/mnt/cachefs"
+databases:
+- type: "MYSQL"
+  name: "twitterexportdb"
+  version: "8.0"
+- type: "REDIS"
+  name: "twitterexportrs"
+  version: "6"
+routers:
+- name: "main-twitter-export"
+  routes:
+  - application_name: "twitter-export"
+    paths:
+    - "/*"
