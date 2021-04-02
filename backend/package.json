@@ -6,8 +6,8 @@
   "author": "Angel S. Moreno <angelxmoreno@gmail.com>",
   "main": "dist/index.js",
   "scripts": {
-    "lint:check": "eslint .  --ext .json,ts,js",
-    "lint:fix": "eslint .  --ext .json,ts,js --fix",
+    "lint:check": "eslint . --ext .json,ts,js",
+    "lint:fix": "eslint . --ext .json,ts,js --fix",
     "clean": "rimraf dist/*",
     "build": "yarn clean && yarn tsc",
     "prestart": "yarn build",
