@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { UserEntity } from '../mobx/entities/UserEntity';
+import isDevelopment from '../utils/isDevelopment';
 
-const BASE_DOMAIN = 'http://localhost:4000';
+const BASE_DOMAIN = isDevelopment() ? 'http://localhost:4000' : '';
 const REQUEST_TOKEN_URL = '/auth/request-token';
 const ACCESS_TOKEN_URL = '/auth/access-token';
-const CALLBACK_URL = 'http://localhost:3000/';
+const CALLBACK_URL = isDevelopment() ? 'http://localhost:3000/' : '';
 
 export interface RequestTokenResponse {
   oauth_token: string;
