@@ -5,7 +5,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
     project: './tsconfig.json',
-    extraFileExtensions: ['.json',".js"],
+    extraFileExtensions: ['.json', '.js'],
   },
   plugins: ['json-format', '@typescript-eslint', 'prettier'],
   rules: {

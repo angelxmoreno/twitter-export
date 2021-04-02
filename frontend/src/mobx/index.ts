@@ -18,7 +18,7 @@ export const StoreContext: Context<RootStore> = createContext(rootStore);
 
 export const useStore = (): RootStore => useContext(StoreContext);
 
-export async function hydrateStores(): Promise<void[]> {
+export async function hydrateStores(): Promise<void> {
   const hydrate = create({
     storage: localStorage,
     jsonify: true,
@@ -32,5 +32,6 @@ export async function hydrateStores(): Promise<void[]> {
       .catch(e => console.error(`Issue hydrating ${storeName}: `, e));
   });
 
-  return Promise.all(promises);
+  await Promise.all(promises);
+  await rootStore.authStore.checkOAuthParams();
 }

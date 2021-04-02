@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarText, NavbarToggler } from 'reactstrap';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
 import NavItemLink from './NavItemLink';
+import AuthButton from '../components/AuthButton';
 
 const NavBarTop: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,7 @@ const NavBarTop: FC = () => {
           <NavItemLink to="/" exact label="Home" />
           <NavItemLink to="/search" exact label="Search" />
         </Nav>
-        <NavbarText>Simple Text</NavbarText>
+        <AuthButton />
       </Collapse>
     </Navbar>
   );
