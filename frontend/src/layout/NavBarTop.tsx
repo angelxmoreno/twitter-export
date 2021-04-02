@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
-import NavItemLink from './NavItemLink';
+import NavItemLink from '../router/NavItemLink';
 import AuthButton from '../components/AuthButton';
 
 const NavBarTop: FC = () => {
@@ -15,6 +15,7 @@ const NavBarTop: FC = () => {
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mr-auto" navbar>
           <NavItemLink to="/" exact label="Home" />
+          <NavItemLink to="/followers" exact label="Followers" />
           <NavItemLink to="/search" exact label="Search" />
         </Nav>
         <AuthButton />

@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction, transaction } from 'mobx';
 import { persist } from 'mobx-persist';
 import { UserEntity } from '../entities/UserEntity';
 import Auth, { UserWithJWTResponse } from '../../api/Auth';
+import appHistory from '../../router/appHistory';
 
 export default class AuthStore {
   @persist('object') user?: UserEntity;
@@ -30,6 +31,10 @@ export default class AuthStore {
       this.user = undefined;
       this.jwt = undefined;
     });
+
+    appHistory.push({
+      pathname: '/',
+    });
   }
 
   async checkOAuthParams(): Promise<void> {
@@ -39,8 +44,10 @@ export default class AuthStore {
       this.isLoading = true;
       const oauth_token = params.get('oauth_token') as string;
       const oauth_verifier = params.get('oauth_verifier') as string;
+      const returnTo = params.get('returnTo') as string;
       url.searchParams.delete('oauth_token');
       url.searchParams.delete('oauth_verifier');
+      url.searchParams.delete('returnTo');
       try {
         const { user, jwt }: UserWithJWTResponse = await Auth.getAccessTokens(oauth_token, oauth_verifier);
         runInAction(() => {
@@ -52,13 +59,16 @@ export default class AuthStore {
         console.error('Error getting access tokens', e.message);
       } finally {
         this.isLoading = false;
-        window.location.href = url.toString();
+        appHistory.push({
+          pathname: returnTo,
+          search: url.search,
+        });
       }
     }
     return undefined;
   }
 
-  getLogInUrl(): Promise<string> {
-    return Auth.getAuthorizeUrl();
+  getLogInUrl(fromPath?: string): Promise<string> {
+    return Auth.getAuthorizeUrl(fromPath);
   }
 }

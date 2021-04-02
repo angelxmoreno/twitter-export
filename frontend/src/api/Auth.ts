@@ -20,10 +20,10 @@ export interface UserWithJWTResponse {
 const buildAuthorizeUrlFromRequestTokens = (requestTokens: RequestTokenResponse): string =>
   `https://api.twitter.com/oauth/authorize?oauth_token=${requestTokens.oauth_token}`;
 
-const getRequestTokens = async (): Promise<RequestTokenResponse> => {
+const getRequestTokens = async (fromPath?: string): Promise<RequestTokenResponse> => {
   try {
     const { data } = await axios.get<RequestTokenResponse>(BASE_DOMAIN + REQUEST_TOKEN_URL, {
-      params: { callback_url: CALLBACK_URL },
+      params: { callback_url: `${CALLBACK_URL}?returnTo=${fromPath}` },
     });
     // eslint-disable-next-line no-console
     console.log('RequestTokenResponse', data);
@@ -35,8 +35,8 @@ const getRequestTokens = async (): Promise<RequestTokenResponse> => {
   }
 };
 
-const getAuthorizeUrl = async (): Promise<string> => {
-  const requestTokens = await getRequestTokens();
+const getAuthorizeUrl = async (fromPath?: string): Promise<string> => {
+  const requestTokens = await getRequestTokens(fromPath);
   return buildAuthorizeUrlFromRequestTokens(requestTokens);
 };
 

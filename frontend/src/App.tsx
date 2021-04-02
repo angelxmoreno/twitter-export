@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import Pages from './pages';
 import PageContainer from './layout/PageContainer';
+import PrivateRoute from './router/PrivateRoute';
+import appHistory from './router/appHistory';
 
 const App: FC = () => {
   return (
-    <Router>
+    <Router history={appHistory}>
       <PageContainer>
         <Switch>
           <Route path="/" exact>
@@ -17,6 +19,9 @@ const App: FC = () => {
           <Route path="/search">
             <Pages.Search />
           </Route>
+          <PrivateRoute path="/followers">
+            <Pages.Followers />
+          </PrivateRoute>
         </Switch>
       </PageContainer>
     </Router>
