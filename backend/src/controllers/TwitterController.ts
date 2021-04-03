@@ -7,7 +7,7 @@ import RepositoryManager from '../services/RepositoryManager';
 import { PaginateOptions } from '../repositories/RepositoryBase';
 import { PaginatorResponse } from '../helpers/paginatorDecorator';
 import { FollowerEntity } from '../entities/FollowerEntity';
-import Cache, { buildCacheKey } from '../helpers/Cache';
+import Cache, { buildCacheKey } from '../services/Cache';
 
 @JsonController('/api')
 export default class TwitterController {
