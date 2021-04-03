@@ -1,0 +1,17 @@
+{
+  "name": "twitter-export",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:angelxmoreno/twitter-export.git",
+  "author": "Angel S. Moreno <angelxmoreno@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "heroku-prebuild": "cd backend && yarn install",
+    "start": "cd backend && yarn start"
+  },
+  "engines": {
+    "node": "14.15.5",
+    "npm": "6.14.11",
+    "yarn": "1.22.10"
+  }
+}
