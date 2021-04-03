@@ -6,7 +6,7 @@ import isDevelopment from '../utils/isDevelopment';
 const BASE_DOMAIN = isDevelopment() ? 'http://localhost:4000' : getenv('REACT_APP_BE_DOMAIN');
 const REQUEST_TOKEN_URL = '/auth/request-token';
 const ACCESS_TOKEN_URL = '/auth/access-token';
-const CALLBACK_URL = isDevelopment() ? 'http://localhost:3000/' : getenv.url('REACT_APP_CALLBACK_URL');
+const CALLBACK_URL = isDevelopment() ? 'http://localhost:3000/' : getenv('REACT_APP_CALLBACK_URL');
 
 export interface RequestTokenResponse {
   oauth_token: string;
