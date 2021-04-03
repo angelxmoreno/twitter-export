@@ -1,11 +1,11 @@
 ---
 application:
-  name: "twitter-export-fe"
+  name: "twitter-export"
   project: "twitter-export"
   organization: "QoveryCommunity"
 routers:
-- name: "main-twitter-export-fe"
+- name: "main-twitter-export"
   routes:
-  - application_name: "twitter-export-fe"
+  - application_name: "twitter-export"
     paths:
     - "/*"
