@@ -6,8 +6,10 @@ import { isDevelopment } from './helpers/node-env';
 import { JsonErrorHandler } from './middlewares/JsonErrorHandler';
 import { NotFoundMiddleware } from './middlewares/NotFoundMiddleware';
 import currentUserChecker from './helpers/currentUserChecker';
+import Env from './helpers/Env';
 
 const server: Application = createExpressServer({
+  routePrefix: Env.string('API_PREFIX', ''),
   cors: true,
   defaultErrorHandler: false,
   currentUserChecker,
