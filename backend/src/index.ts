@@ -3,7 +3,7 @@ import server from './server';
 import Env from './helpers/Env';
 import dbConnection from './database';
 
-const PORT = Env.string('SERVER_PORT');
+const PORT = Env.string('PORT');
 
 const start = async () => {
   const connection = await dbConnection.connect();
