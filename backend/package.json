@@ -10,7 +10,6 @@
     "lint:fix": "eslint src --ext .json,ts,js --fix",
     "clean": "rimraf dist/*",
     "build": "yarn clean && yarn tsc",
-    "prestart": "yarn build",
     "start": "node .",
     "tsc": "tsc",
     "dev": "nodemon ./src/index.ts"
@@ -35,11 +34,18 @@
     "pagination-apis": "^1.0.8",
     "pluralize": "^8.0.0",
     "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
     "routing-controllers": "^0.9.0",
     "twit": "^2.2.11",
     "twitter-lite": "^1.1.0",
     "typeorm": "^0.2.31",
-    "typeorm-naming-strategies": "^2.0.0"
+    "typeorm-naming-strategies": "^2.0.0",
+    "typescript": "^4.2.3"
+  },
+  "engines": {
+    "node": "14.15.5",
+    "npm": "6.14.11",
+    "yarn": "1.22.10"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.0",
@@ -66,8 +72,6 @@
     "eslint-plugin-prettier": "^3.3.1",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
-    "rimraf": "^3.0.2",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.3"
+    "ts-node": "^9.1.1"
   }
 }
