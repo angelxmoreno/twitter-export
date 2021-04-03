@@ -1,0 +1,11 @@
+---
+application:
+  name: "twitter-export-fe"
+  project: "twitter-export"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-twitter-export-fe"
+  routes:
+  - application_name: "twitter-export-fe"
+    paths:
+    - "/*"
