@@ -7,10 +7,10 @@ const connectionManager = getConnectionManager();
 const dbConnection = connectionManager.create({
   type: 'mysql',
   namingStrategy: new CakePhpNamingStrategy(),
-  url: Env.string('DATABASE_URL'),
+  url: Env.string('DATABASE_URL', 'mysql://127.0.0.1/db'),
   entities: [`${__dirname}/entities/*.{js,ts}`],
-  synchronize: Env.bool('DATABASE_SYNCING'),
-  logging: Env.bool('DATABASE_LOGGING'),
+  synchronize: Env.bool('DATABASE_SYNCING', true),
+  logging: Env.bool('DATABASE_LOGGING', true),
 });
 
 export default dbConnection;
